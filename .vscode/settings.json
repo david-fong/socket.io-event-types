@@ -1,0 +1,27 @@
+{
+    "typescript.tsdk": "./node_modules/typescript/lib",
+    "files.exclude": {
+        // generic excludes:
+        "node_modules/{[^.@]*,}": true,
+        "package-lock.json": true,
+        "pnpm-lock.yaml": true,
+
+        // things that I might like to toggle:
+        "node_modules/": true,
+        "**/*tsconfig.json": true,
+    },
+    "search.exclude": {
+        "node_modules/": true,
+
+        "**/*tsconfig.json": false,
+    },
+    "files.associations": {
+        ".eslintignore": "ignore",
+    },
+
+    "files.trimTrailingWhitespace": true,
+
+    "[typescript]": {
+        "editor.insertSpaces": false,
+    },
+}

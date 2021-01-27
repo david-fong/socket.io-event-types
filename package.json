@@ -1,0 +1,19 @@
+{
+  "name": "socket.io-event-types",
+  "version": "1.0.0",
+  "description": "TypeScript utilities for stricter Socket.IO event function typings.",
+  "license": "MIT",
+  "author": "David Fong",
+  "keywords": [
+    "socket.io"
+  ],
+  "main": "index.js",
+  "typings": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "peerDependencies": {
+    "socket.io": "^3.0.0",
+    "socket.io-client": "^3.0.0"
+  }
+}
