@@ -29,4 +29,4 @@ new Server({}).of("ns1", (baseSock: ServerBaseSocket) => {
 		;
 	});
 	serverSock1.emit("d1-downstream-3", 1, 2, 3, "", () => undefined);
-})
+});

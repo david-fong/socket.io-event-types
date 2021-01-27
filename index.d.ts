@@ -1,37 +1,29 @@
 import type { Socket as BaseClientSocket } from "socket.io-client";
 import type { Socket as BaseServerSocket } from "socket.io";
 
-type _Args = Record<string, readonly any[]>;
-
-type _MkEmitArgs<O extends _Args> = {
-	[K in keyof O]: [K, ...O[K]];
-}[keyof O];
-
-type _MkOnArgs<O extends _Args> = {
-	[K in keyof O]: [K, (...args: O[K]) => void];
-}[keyof O];
-
 interface CommsDesc {
-	readonly Upstream: _Args;
-	readonly Downstream: _Args;
+	readonly Upstream:   Record<string, readonly any[]>;
+	readonly Downstream: Record<string, readonly any[]>;
 }
 
 /** */
 // @ts-expect-error
 export interface ClientStrictSocket<C extends CommsDesc> extends BaseClientSocket {
-	/** @override */
-	on(...args: _MkOnArgs<C["Downstream"]>): this;
 
 	/** @override */
-	emit(...args: _MkEmitArgs<C["Upstream"]>): this;
+	on<E extends keyof C["Downstream"]>(eventName: E, callback: (...args: C["Downstream"][E]) => void): this;
+
+	/** @override */
+	emit<E extends keyof C["Upstream"]>(eventName: E, ...args: C["Upstream"][E]): this;
 }
 
 /** */
 // @ts-expect-error
 export interface ServerStrictSocket<C extends CommsDesc> extends BaseServerSocket {
-	/** @override */
-	on(...args: _MkOnArgs<C["Upstream"]>): this;
 
 	/** @override */
-	emit(...args: _MkEmitArgs<C["Downstream"]>): boolean;
+	on<E extends keyof C["Upstream"]>(eventName: E, callback: (...args: C["Upstream"][E]) => void): this;
+
+	/** @override */
+	emit<E extends keyof C["Downstream"]>(eventName: E, ...args: C["Downstream"][E]): boolean;
 }

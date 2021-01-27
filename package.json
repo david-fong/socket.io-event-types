@@ -1,14 +1,20 @@
 {
   "name": "socket.io-event-types",
-  "version": "1.0.0",
-  "description": "TypeScript utilities for stricter Socket.IO event function typings.",
+  "version": "3.0.0",
   "license": "MIT",
-  "author": "David Fong",
+  "description": "TypeScript utilities for stricter Socket.IO event function typings.",
   "keywords": [
     "socket.io"
   ],
+  "repository": "github:david-fong/socket.io-event-types",
+  "author": "David Fong (https://github.com/david-fong)",
+  "type": "module",
   "main": "index.js",
   "typings": "",
+  "files": [],
+  "directories": {
+    "test": "example"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
