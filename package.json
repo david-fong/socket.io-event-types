@@ -10,8 +10,8 @@
   "author": "David Fong (https://github.com/david-fong)",
   "type": "module",
   "main": "index.js",
-  "typings": "",
-  "files": [],
+  "types": "index.d.ts",
+  "files": ["index.d.ts"],
   "directories": {
     "test": "example"
   },
