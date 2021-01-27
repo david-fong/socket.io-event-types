@@ -1,49 +1,37 @@
 import type { Socket as BaseClientSocket } from "socket.io-client";
 import type { Socket as BaseServerSocket } from "socket.io";
 
-type Args = Record<string, readonly [arg0: any, ...args: any[]]>;
-type MkArgs<O extends Args> = {
-    [K in keyof O]: [K, ...O[K]];
+type _Args = Record<string, readonly any[]>;
+
+type _MkEmitArgs<O extends _Args> = {
+	[K in keyof O]: [K, ...O[K]];
 }[keyof O];
 
-/** */
-export declare namespace Client {
-    /**
-     * @template R
-     * Receiving. Arguments dictionary for incoming events from a server.
-     *
-     * @template T
-     * Transmitting. Arguments dictionary for outgoing events to server.
-     */
-    export interface Socket<
-        R extends Args,
-        T extends Args,
-    > extends BaseClientSocket {
-        /** @override */
-        on(...args: MkArgs<R>): this;
+type _MkOnArgs<O extends _Args> = {
+	[K in keyof O]: [K, (...args: O[K]) => void];
+}[keyof O];
 
-        /** @override */
-        emit(...args: MkArgs<T>): this;
-    }
+interface CommsDesc {
+	readonly Upstream: _Args;
+	readonly Downstream: _Args;
 }
 
 /** */
-export namespace Server {
-    /**
-     * @template R
-     * Receiving. Arguments dictionary for incoming events from a client.
-     *
-     * @template T
-     * Transmitting. Arguments dictionary for outgoing events to clients.
-     */
-    export interface Socket<
-        R extends Args,
-        T extends Args,
-    > extends BaseServerSocket {
-        /** @override */
-        on(...args: MkArgs<R>): this;
+// @ts-expect-error
+export interface ClientStrictSocket<C extends CommsDesc> extends BaseClientSocket {
+	/** @override */
+	on(...args: _MkOnArgs<C["Downstream"]>): this;
 
-        /** @override */
-        emit(...args: MkArgs<T>): this;
-    }
+	/** @override */
+	emit(...args: _MkEmitArgs<C["Upstream"]>): this;
+}
+
+/** */
+// @ts-expect-error
+export interface ServerStrictSocket<C extends CommsDesc> extends BaseServerSocket {
+	/** @override */
+	on(...args: _MkOnArgs<C["Upstream"]>): this;
+
+	/** @override */
+	emit(...args: _MkEmitArgs<C["Downstream"]>): boolean;
 }
